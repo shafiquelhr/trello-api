@@ -10,7 +10,7 @@ public class Ticket {
 
     private int ticketId;
     private Developer assignedTo;
-    private Lead assignedBy;
+    private User assignedBy;
     private String ticketTitle;
     private String ticketDescription;
     private TicketStatus ticketStatus;
@@ -18,7 +18,7 @@ public class Ticket {
     private String deadline;
 
     public Ticket(
-            int ticketId, Developer assignedTo, Lead assignedBy, String ticketTitle,
+            int ticketId, Developer assignedTo, User assignedBy, String ticketTitle,
             String ticketDescription, TicketStatus ticketStatus, String ticketCreatedAt,
             String deadline)
     {
