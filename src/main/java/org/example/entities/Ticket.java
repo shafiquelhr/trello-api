@@ -31,6 +31,4 @@ public class Ticket {
         this.ticketCreatedAt = ticketCreatedAt;
         this.deadline = deadline;
     }
-
-
 }

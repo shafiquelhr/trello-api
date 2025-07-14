@@ -11,15 +11,14 @@ public class Developer extends User {
     //fields
     private int monthsOfExperience;
     private String[] skills;
-    private Lead teamLeader;
+    private User teamLeader;
     private Role role;
 
 
-    public Developer(String name, Role role, int monthsOfExperience, String[] skills, Lead teamLeader) {
+    public Developer(String name, Role role, int monthsOfExperience, String[] skills, User teamLeader) {
         super(name, role);
         this.monthsOfExperience = monthsOfExperience;
         this.skills = skills;
         this.teamLeader = teamLeader;
-        this.role = role;
     }
 }
