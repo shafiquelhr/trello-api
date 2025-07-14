@@ -4,22 +4,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.entities.*;
 import org.example.enums.Role;
 import org.example.enums.TicketStatus;
+import org.example.utils.DBConnection;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         String[] skills = {"Java", "Spring Boot", "Databases"};
 
         Lead osamaLead = new Lead("Osama Azam", Role.LEAD, "Trello API");
         Developer javaInternee = new Developer("Shafique", Role.INTERNEE, 2, skills, osamaLead);
-        Admin aliAdmin = new Admin("Ali", Role.ADMIN);
-//        List<Ticket> tickets = new ArrayList<Ticket>();
+        User aliAdmin = new User("Ali", Role.ADMIN);
 
-        //  todo tickets board
+        DBConnection.createDbConnection();
+
+        // todo tickets board
         List<Ticket> todoTickets = new ArrayList<>();
         todoTickets.add(new Ticket(1, javaInternee, osamaLead, "Fix Login Issue", "Resolve user login bug", TicketStatus.TODO, "9 July", "14 July"));
         todoTickets.add(new Ticket(2, javaInternee, osamaLead, "Add Task Filtering", "Add filtering tasks by status", TicketStatus.TODO, "9 July", "16 July"));
@@ -36,10 +39,9 @@ public class Main {
         //  done tickets board
         List<Ticket> doneTickets = new ArrayList<>();
         doneTickets.add(new Ticket(5, javaInternee, osamaLead, "Project Setup", "Initialized Spring Boot project", TicketStatus.DONE, "6 July", "7 July"));
-//        doneTickets.add(new Ticket(6, javaInternee, aliAdmin, "Initial Commit", "Pushed first working commit", TicketStatus.DONE, "7 July", "7 July"));
+        doneTickets.add(new Ticket(6, javaInternee, aliAdmin, "Initial Commit", "Pushed first working commit", TicketStatus.DONE, "7 July", "7 July"));
 
         Board doneBoard = new Board(TicketStatus.DONE, doneTickets);
-
 
         System.out.println("\n==== TODO BOARD ====");
         toDoBoard.printAllTickets();
@@ -50,9 +52,18 @@ public class Main {
         System.out.println("\n==== DONE BOARD ====");
         doneBoard.printAllTickets();
 
+        System.out.println("\n=== Ticket by Status ===");
+        System.out.println(toDoBoard.getTicketsByStatus(TicketStatus.TODO));
+
         //log total number of tickets
         log.info("TODO Tickets Count: {}", toDoBoard.getTickets().size());
         log.info("IN REVIEW Tickets Count: {}", inReviewBoard.getTickets().size());
         log.info("DONE Tickets Count: {}", doneBoard.getTickets().size());
+
+        //lambdas in java:
+        Runnable sdfsd = () -> System.out.println("Hello from lambda expression!");
+
+        sdfsd.run();
+
     }
 }

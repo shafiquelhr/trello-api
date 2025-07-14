@@ -32,7 +32,7 @@ public class Board {
                 "Deadline: " + tickets.get(0).getDeadline();
     }
 
-    // ✅ Print all tickets in board
+    // print all tickets in board
     public void printAllTickets() {
         System.out.println("----- Board: " + status + " -----");
         for (Ticket ticket : tickets) {
@@ -46,7 +46,7 @@ public class Board {
         }
     }
 
-    // ✅ Helper method: Filter tickets by status
+    // helper method: Filter tickets by status
     public List<Ticket> getTicketsByStatus(TicketStatus status) {
         return tickets.stream()
                 .filter(ticket -> ticket.getTicketStatus() == status)
