@@ -6,4 +6,5 @@ public enum Role {
     LEAD,
     SOFTWARE_ENGINEER,
     INTERNEE,
+    DEVELOPER,
 }

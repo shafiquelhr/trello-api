@@ -6,20 +6,23 @@ import org.example.enums.TicketStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import java.util.List;
-
 @Getter @Setter
 public class Board {
 
     TicketStatus status;
     List<Ticket> tickets;
+    /** Aggregation: Board collects a list of Ticket objects
+     * meaning aggregates (loose has-a relationship) Tickets
+     * and child (tickets) can exist independently. Deleting
+     * a Board shouldn't delete the Tickets from DB.
+     **/
 
     public Board(TicketStatus status, List<Ticket> tickets) {
         this.status = status;
         this.tickets = tickets;
     }
 
-    //getListOfTicketsByStatus
+    // get first ticket
     public String getFirstTicket() {
         //format a ticket
         return "Ticket ID: " + tickets.get(0).getTicketId() + "\n" +
@@ -41,12 +44,13 @@ public class Board {
             System.out.println("Assigned By: " + ticket.getAssignedBy().getName());
             System.out.println("Title: " + ticket.getTicketTitle());
             System.out.println("Status: " + ticket.getTicketStatus());
+            System.out.println("Created At: " + ticket.getTicketCreatedAt());
             System.out.println("Deadline: " + ticket.getDeadline());
             System.out.println("-----------------------------");
         }
     }
 
-    // helper method: Filter tickets by status
+    // helper method for filtering tickets by status
     public List<Ticket> getTicketsByStatus(TicketStatus status) {
         return tickets.stream()
                 .filter(ticket -> ticket.getTicketStatus() == status)

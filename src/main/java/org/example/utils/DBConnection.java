@@ -1,5 +1,7 @@
 package org.example.utils;
 
+import org.example.config.DBConfigLoader;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ public class DBConnection {
                     DBConfigLoader.getUsername(),
                     DBConfigLoader.getPassword()
             );
-            System.out.println("Connection Successful");
+//            System.out.println("Connection Successful");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package org.example.utils;
+package org.example.config;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -8,10 +8,11 @@ import java.util.Properties;
 public class DBConfigLoader {
     private static final Properties props = new Properties();
 
+    //reads properties from application.properites file.
     static {
-        try (InputStream input = DBConfigLoader.class.getClassLoader().getResourceAsStream("db.properties")) {
+        try (InputStream input = DBConfigLoader.class.getClassLoader().getResourceAsStream("application.properties")) {
             if (input == null) {
-                throw new RuntimeException("Cannot find db.properties file");
+                throw new RuntimeException("Cannot find application.properties file");
             }
             props.load(input);
         } catch (Exception e) {

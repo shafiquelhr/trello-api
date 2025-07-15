@@ -9,6 +9,7 @@ import org.example.enums.Role;
 public class User {
 
     private String name;
+    private int id;
     private Role role;
     private String projectUnderManagement; // only used if role == LEAD
 
@@ -17,7 +18,7 @@ public class User {
         this.role = role;
     }
 
-    // Optional constructor if you want to set projectUnderManagement
+    // constructor for Team Lead so he can set projectUnderManagement.s
     public User(String name, Role role, String projectUnderManagement) {
         this.name = name;
         this.role = role;
