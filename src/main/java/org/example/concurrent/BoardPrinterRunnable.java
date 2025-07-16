@@ -5,7 +5,7 @@ import org.example.enums.TicketStatus;
 import org.example.services.BoardService;
 import org.example.services.impl.BoardServiceImpl;
 
-//printing every board’s tickets
+//printing every board’s tickets based on ticket status
 public class BoardPrinterRunnable implements Runnable {
 
     private final TicketStatus status;
@@ -16,7 +16,7 @@ public class BoardPrinterRunnable implements Runnable {
 
     @Override
     public void run() {
-        BoardService boardService = new BoardServiceImpl(); // lightweight
+        BoardService boardService = new BoardServiceImpl();
         Board board = boardService.getBoard(status);
         System.out.println(Thread.currentThread().getName() + " printing " + status + " board");
         board.printAllTickets();

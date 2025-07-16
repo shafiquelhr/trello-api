@@ -31,4 +31,8 @@ public class DBConfigLoader {
     public static String getPassword() {
         return props.getProperty("db.password");
     }
+
+    public static int getThreadPoolSize() {
+        return Integer.parseInt(props.getProperty("thread.pool.size"));
+    }
 }
