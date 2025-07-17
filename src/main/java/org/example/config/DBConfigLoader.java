@@ -4,7 +4,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 
-//loading database configuration without @Value annotation and using InputStream to read byte contents of the db.properties file.
+/** Loading database configuration without @Value annotation
+ * and using InputStream to read byte contents of the db.properties file.
+ * **/
 public class DBConfigLoader {
     private static final Properties props = new Properties();
 

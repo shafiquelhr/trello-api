@@ -38,7 +38,6 @@ public class MultiThreadDemo {
         todoPrinter.start();
         System.out.println("==== Runnable Multithreading Demo ENDS ====");
 
-
         // 3. Callable with ExecutorService that returns Futures
         int poolSize = DBConfigLoader.getThreadPoolSize();
         System.out.println("Pool size from app.properties: " + poolSize);

@@ -27,4 +27,21 @@ public class DBConnection {
 
         return connection;
     }
+
+    /* Following is a demo of using finalize() method to clean up db connection resources
+    DbConnectionManager manager = new DbConnectionManager();
+    Connection conn = manager.getConnection();
+
+    // simulating object becoming unreachable
+    manager = null;
+    conn = null;
+
+    // Hint to JVM to run GC (not guaranteed!)
+    System.out.println("Requesting GC...");
+    System.gc(); // Hints JVM to run Garbage Collector
+    System.out.println("GC requested");
+
+
+    System.out.println("End of main method");
+    */
 }
