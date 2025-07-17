@@ -13,6 +13,7 @@ import java.util.concurrent.*;
 
 public class MultiThreadDemo {
 
+    /*
     public static void main(String[] args) throws Exception {
 
         // verifying multithreading with quick and small data...
@@ -55,4 +56,5 @@ public class MultiThreadDemo {
         pool.shutdown();
 
     }
+    */
 }

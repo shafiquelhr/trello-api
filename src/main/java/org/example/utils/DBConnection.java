@@ -1,6 +1,7 @@
 package org.example.utils;
 
 import org.example.config.DBConfigLoader;
+import org.example.config.DotenvConfigLoader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,16 +11,19 @@ import java.sql.SQLException;
 public class DBConnection {
     public static Connection connection;
 
+    public static String dbUrl = DotenvConfigLoader.getDbUrl();
+    public static String username = DotenvConfigLoader.getDbUser();
+    public static String password = DotenvConfigLoader.getDbPassword();
+    public static int poolSize = DotenvConfigLoader.getThreadPoolSize();
+
     public static Connection createDbConnection() {
         connection = null;
 
         try {
             connection = DriverManager.getConnection(
-                    DBConfigLoader.getUrl(),
-                    DBConfigLoader.getUsername(),
-                    DBConfigLoader.getPassword()
-            );
-//            System.out.println("Connection Successful");
+                    //dbUrl, username, password
+                    DBConfigLoader.getUrl(), DBConfigLoader.getUsername(), DBConfigLoader.getPassword());
+            //System.out.println("Connection Successful with: dbUrl=" + dbUrl + ", username=" + username + ", password=" + password + ", poolSize=" + poolSize);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();

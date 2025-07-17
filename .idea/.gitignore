@@ -10,4 +10,5 @@
 /dataSources.local.xml
 /resources/db.properties
 /resources/application.properties
+/resources/.env
 
