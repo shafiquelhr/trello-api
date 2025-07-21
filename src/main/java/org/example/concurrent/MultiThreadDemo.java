@@ -1,15 +1,4 @@
-package org.example;
-
-import org.example.concurrent.*;
-import org.example.config.DBConfigLoader;
-import org.example.entities.*;
-import org.example.enums.*;
-import org.example.services.*;
-import org.example.services.impl.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.*;
+package org.example.concurrent;
 
 public class MultiThreadDemo {
 

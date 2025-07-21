@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
 
     private final TicketService ticketService = new TicketServiceImpl();
-    private Map<TicketStatus, Board> cache;           // lazy‑loaded
+    private Map<TicketStatus, Board> cache;           // lazy‑loading
 
     @Override
     public Map<TicketStatus, Board> buildBoards() {

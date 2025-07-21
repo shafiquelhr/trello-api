@@ -9,9 +9,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //Task: simulate a background ticket creator
+/*
 public class TicketCreatorThread extends Thread {
 
-    /*
+
     private final Developer dev;
     private final User admin;
     private final TicketService ticketService = new TicketServiceImpl();
@@ -35,5 +36,6 @@ public class TicketCreatorThread extends Thread {
         }
     }
 
-    */
+
 }
+*/
