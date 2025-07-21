@@ -10,7 +10,7 @@ import java.sql.SQLException;
 //our db connection.
 public class DBConnection {
     public static Connection connection;
-
+//repsuh
     public static String dbUrl = DotenvConfigLoader.getDbUrl();
     public static String username = DotenvConfigLoader.getDbUser();
     public static String password = DotenvConfigLoader.getDbPassword();
