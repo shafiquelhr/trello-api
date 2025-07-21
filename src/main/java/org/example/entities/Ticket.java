@@ -42,6 +42,7 @@ public class Ticket {
         this.deadline = deadline;
     }
 
+    //fixing the assignedTo and assignedBy ID issues
     public static Ticket fromResultSet(ResultSet rs) throws SQLException {
         Ticket t = new Ticket();
         t.setTicketId(rs.getInt("ticket_id"));
@@ -66,7 +67,7 @@ public class Ticket {
         return t;
     }
     
-    // Helper method to get user by ID
+    // helper method to get user by ID
     private static User getUserById(int userId) {
         String sql = "SELECT * FROM users WHERE id = ?";
         try (Connection conn = DBConnection.createDbConnection();

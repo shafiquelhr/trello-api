@@ -7,7 +7,7 @@ import org.example.services.impl.TicketServiceImpl;
 import java.util.concurrent.Callable;
 
 public class TicketCountCallable implements Callable<Integer> {
-
+    /*
     private final TicketStatus status;
 
     public TicketCountCallable(TicketStatus status) {
@@ -22,4 +22,5 @@ public class TicketCountCallable implements Callable<Integer> {
                 " counted " + count + " tickets in " + status);
         return count;
     }
+    */
 }

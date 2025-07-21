@@ -37,7 +37,7 @@ public class UserDao {
             try (ResultSet keys = stmt.getGeneratedKeys()) {
                 if (keys.next()) {
                     int id = keys.getInt(1);
-                    user.setId(id);          // ✅ set back into object
+                    user.setId(id);          // set back into object
                     return id;               //   (optional return)
                 }
             }
