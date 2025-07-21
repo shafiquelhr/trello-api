@@ -19,57 +19,71 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        // services objs
+        // 1. Initialize service layer
         UserService userService = new UserServiceImpl();
-        TicketService ticketService = new TicketServiceImpl();
         DeveloperService devService = new DeveloperServiceImpl();
+        TicketService ticketService = new TicketServiceImpl();
         BoardService boardService = new BoardServiceImpl();
 
-        // add users
-        User admin = new User("John Bravo", Role.ADMIN);
-        User lead = new User("Shams Sol", Role.LEAD, "Askari LHR");
+        // 2. Create and save users (admin and lead)
+        User admin = new User(0, "Mark", Role.ADMIN, null, "admin@example.com",
+                "mark", "hashed_pass12@21", LocalDateTime.now(), null, null,
+                true, "000-000-0000", null, null, null);
+
+        User lead = new User(1, "Cuban", Role.LEAD, "LHRs", "lead@example.com",
+                "cube", "hashed_pass", LocalDateTime.now(), null, null,
+                true, "111-111-1111", null, null, null);
 
         //userService.addUser(admin);
         //userService.addUser(lead);
-
         //userService.getAllUsers();
 
-        // add developer first to assign them tickets
+        // 3. Create and save developer
+        Developer dev = new Developer(0, "Madvaki", Role.INTERNEE, null,
+                "dev@example.com", "duadsql", "hashed_pass",
+                LocalDateTime.now(), null, null, true, null, null, null, null,
+                6, "SQL, JDBC, Postgres", 50, 0.0,
+                "Available", null, null, lead, null, null);
 
-        Developer dev = new Developer("Duad SQL", Role.INTERNEE,
-                6, new String[]{"SQL", "noSQL", "Databases"}, lead);
         //devService.addDeveloper(dev);
-        List<Developer> developers = devService.getAllDevelopers();
+        //devService.getAllDevelopers();
 
-        for (Developer d : developers) {
-            //System.out.println(d);
-        }
+        // 4. Create and save tickets
+        Ticket t1 = new Ticket(
+                0, "Fix SQL FK Integrity bugs",
+                "SQLIntegrityException on login",
+                TicketStatus.TODO,
+                dev.getId(),
+                admin.getId(),
+                LocalDateTime.now(),
+                LocalDate.now().plusDays(7),
+                null, "High", 10, 0,
+                false, null, 0
+        );
 
-        // now creating tickets
-        Ticket t1 = new Ticket(10, dev, admin, "Fix SQL FK Integrity bugs",
-                "SQLIntegrityException on login", TicketStatus.TODO,
-                LocalDateTime.now(), LocalDate.now().plusDays(7));
+        Ticket t2 = new Ticket(
+                1, "Demo Multithreads",
+                "Clean up JDBC code and shift it to concurrency",
+                TicketStatus.IN_PROGRESS,
+                dev.getId(),
+                lead.getId(),
+                LocalDateTime.now(),
+                LocalDate.now().plusDays(7),
+                null, "Medium", 8, 0,
+                false, null, 0
+        );
 
-        /** SHALLOW copy (just another reference)
-         * Ticket t2 = t1; // just referreing to t1 meaning getting a shallow copy.
-         * t2.setTicketTitle("Different title"); // this will change the title
-         * System.out.println(t1.getTicketTitle());  // new title: "Different title. **/
+        ticketService.addTicket(t1);
+        ticketService.addTicket(t2);
 
-        Ticket t2 = new Ticket(11, dev, lead, "Demo Multithreads",
-                "Clean up JDBC code and shift it to concurrency", TicketStatus.IN_PROGRESS,
-                LocalDateTime.now(), LocalDate.now().plusDays(7));
+        /*
+        // 5. Build and print ticket boards
+        boardService.buildBoards();
+        boardService.printAllBoards();
 
-        //ticketService.addTicket(t1);
-        //ticketService.addTicket(t2);
-
-        // building and displaying boards
-        //boardService.buildBoards();
-        //boardService.printAllBoards();
-
-        // fetching only todo board
-
-        System.out.println("\n--- Tickets in TODO ----");
+        // 6. Optionally filter by status
+        System.out.println("\n--- Tickets in TODO Board ---");
         boardService.getBoard(TicketStatus.TODO).printAllTickets();
-
+        */
     }
 }

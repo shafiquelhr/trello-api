@@ -16,84 +16,81 @@ import java.time.LocalDateTime;
 public class Ticket {
 
     private int ticketId;
-    private User assignedTo; //Association: They are passed to Ticket but not owned by it.
-    private User assignedBy; //Association: Once again User is passed to ticket but not owned by it.
-    private String ticketTitle;
-    private String ticketDescription;
-    private TicketStatus ticketStatus;
-    private LocalDateTime ticketCreatedAt;
+    private String title;
+    private String description;
+    private TicketStatus status;
+    private int assignedToId;
+    private int assignedById;
+    private LocalDateTime createdAt;
     private LocalDate deadline;
+    private LocalDateTime updatedAt;
+    private String priority;
+    private int estimatedHours;
+    private int actualHours;
+    private boolean isBlocked;
+    private String blockedReason;
+    private int commentsCount;
+
+    // Optional (if needed in service layer)
+    private User assignedTo;
+    private User assignedBy;
+
+    //new constructor
+    public Ticket(int ticketId, String title, String description, TicketStatus status,
+                  int assignedToId, int assignedById, LocalDateTime createdAt, LocalDate deadline,
+                  LocalDateTime updatedAt, String priority, int estimatedHours, int actualHours,
+                  boolean isBlocked, String blockedReason, int commentsCount) {
+        this.ticketId = ticketId;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.assignedToId = assignedToId;
+        this.assignedById = assignedById;
+        this.createdAt = createdAt;
+        this.deadline = deadline;
+        this.updatedAt = updatedAt;
+        this.priority = priority;
+        this.estimatedHours = estimatedHours;
+        this.actualHours = actualHours;
+        this.isBlocked = isBlocked;
+        this.blockedReason = blockedReason;
+        this.commentsCount = commentsCount;
+    }
+
+    //new result set that fixed that assignedTo and assignedBy ID issues;
+    public static Ticket fromResultSet(ResultSet rs) throws SQLException {
+        Ticket ticket = new Ticket();
+        ticket.setTicketId(rs.getInt("ticket_id"));
+        ticket.setTitle(rs.getString("title"));
+        ticket.setDescription(rs.getString("description"));
+        ticket.setStatus(TicketStatus.valueOf(rs.getString("status")));
+
+        ticket.setAssignedToId(rs.getInt("assigned_to"));
+        ticket.setAssignedById(rs.getInt("assigned_by"));
+
+        ticket.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+        ticket.setDeadline(rs.getDate("deadline").toLocalDate());
+
+        Timestamp updatedTimestamp = rs.getTimestamp("updated_at");
+        if (updatedTimestamp != null) {
+            ticket.setUpdatedAt(updatedTimestamp.toLocalDateTime());
+        }
+
+        ticket.setPriority(rs.getString("priority"));
+        ticket.setEstimatedHours(rs.getInt("estimated_hours"));
+        ticket.setActualHours(rs.getInt("actual_hours"));
+        ticket.setBlocked(rs.getBoolean("is_blocked"));
+        ticket.setBlockedReason(rs.getString("blocked_reason"));
+        ticket.setCommentsCount(rs.getInt("comments_count"));
+
+        // Optional - fetch User objects using service/DAO layer
+        // ticket.setAssignedTo(getUserById(ticket.getAssignedToId()));
+        // ticket.setAssignedBy(getUserById(ticket.getAssignedById()));
+
+        return ticket;
+    }
 
     // Compile-time polymorphism (constructor overloading)
-    public Ticket() {}
-
-    public Ticket(
-            int ticketId, User assignedTo, User assignedBy, String ticketTitle, // Changed from Developer to User
-            String ticketDescription, TicketStatus ticketStatus, LocalDateTime ticketCreatedAt,
-            LocalDate deadline)
-    {
-        this.ticketId = ticketId;
-        this.assignedTo = assignedTo;
-        this.assignedBy = assignedBy;
-        this.ticketTitle = ticketTitle;
-        this.ticketDescription = ticketDescription;
-        this.ticketStatus = ticketStatus;
-        this.ticketCreatedAt = ticketCreatedAt;
-        this.deadline = deadline;
-    }
-
-    //fixing the assignedTo and assignedBy ID issues
-    public static Ticket fromResultSet(ResultSet rs) throws SQLException {
-        Ticket t = new Ticket();
-        t.setTicketId(rs.getInt("ticket_id"));
-        
-        // fetch assigned users using their IDs
-        int assignedToId = rs.getInt("assigned_to");
-        int assignedById = rs.getInt("assigned_by");
-        
-        // fetch the actual user objects
-        User assignedTo = getUserById(assignedToId);
-        User assignedBy = getUserById(assignedById);
-        
-        // no need for casting now
-        t.setAssignedTo(assignedTo);
-        t.setAssignedBy(assignedBy);
-        
-        t.setTicketTitle(rs.getString("title"));
-        t.setTicketDescription(rs.getString("description"));
-        t.setTicketStatus(TicketStatus.valueOf(rs.getString("status")));
-        t.setTicketCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-        t.setDeadline(rs.getDate("deadline").toLocalDate());
-        return t;
-    }
-    
-    // helper method to get user by ID
-    private static User getUserById(int userId) {
-        String sql = "SELECT * FROM users WHERE id = ?";
-        try (Connection conn = DBConnection.createDbConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-             
-            ps.setInt(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    String name = rs.getString("name");
-                    String roleStr = rs.getString("role");
-                    String project = rs.getString("project_under_management");
-                    
-                    Role role = Role.valueOf(roleStr);
-                    
-                    User user = (role == Role.LEAD) ? 
-                        new User(name, role, project) : 
-                        new User(name, role);
-                    
-                    user.setId(userId);
-                    return user;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        // Return empty user if not found
-        return new User("Unknown: USER NOT FOUND", Role.DEVELOPER);
+    public Ticket() {
     }
 }

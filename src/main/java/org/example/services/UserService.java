@@ -5,5 +5,5 @@ import org.example.entities.User;
 public interface UserService {
     public void addUser(User user);
 
-    public void getAllUsers();
+    void getAllUsers();
 }

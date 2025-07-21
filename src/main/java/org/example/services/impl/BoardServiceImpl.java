@@ -20,7 +20,7 @@ public class BoardServiceImpl implements BoardService {
     public Map<TicketStatus, Board> buildBoards() {
         List<Ticket> all = ticketService.getAllTickets();
         Map<TicketStatus, List<Ticket>> grouped =
-                all.stream().collect(Collectors.groupingBy(Ticket::getTicketStatus,
+                all.stream().collect(Collectors.groupingBy(Ticket::getStatus,
                         () -> new EnumMap<>(TicketStatus.class),
                         Collectors.toList()));
 
